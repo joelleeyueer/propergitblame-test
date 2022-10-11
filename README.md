@@ -3,7 +3,7 @@
 ```bash
   $ cd project-to-test
   $ pip install propergitblame
-  $ git clone [https://github.com/qwchua/propergitblame](https://github.com/qwchua/propergitblame)  
+  $ git clone https://github.com/qwchua/propergitblame
   $ cd propergitblame  
   $ pip install -e . 
   $ cd .. 
