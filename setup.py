@@ -5,6 +5,8 @@ setup(
     name='propergitblame',
     version='0.0.0',
     packages=find_packages(),
+    author='wang',
+    author_email='chuaqiwang@gmail.com',
     install_requires=[
         'click',
         'matplotlib',
