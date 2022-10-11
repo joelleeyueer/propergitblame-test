@@ -3,10 +3,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='propergitblame',
-    description="proper git blame CLI",
     packages=find_packages(),
     email='chuaqiwang@gmail.com',
-    author='wang',
+    author='chua qi wang',
     install_requires=[
         'click',
         'matplotlib',
@@ -18,4 +17,5 @@ setup(
     [console_scripts]
     propergitblame=propergitblame:propergitblame
     '''
+
 )
