@@ -8,9 +8,10 @@
   $ pip install -e . 
   $ cd .. 
 ```
-
 # Sample Usage
-$ **propergitblame** -f js/game_manager.js      
-$ **propergitblame** -f js/game_manager.js -n 200
-$ **propergitblame** -f js/game_manager.js -n 200 -o piechart
-$ **propergitblame** -f all
+```bash
+$ propergitblame -f js/game_manager.js      
+$ propergitblame -f js/game_manager.js -n 200
+$ propergitblame -f js/game_manager.js -n 200 -o piechart
+$ propergitblame -f all
+```
