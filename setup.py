@@ -12,7 +12,7 @@ setup(
         'numpy',
         'numba'
     ],
-    version='0.0.1'
+    version='0.0.0'
     entry_points='''
     [console_scripts]
     propergitblame=propergitblame:propergitblame
