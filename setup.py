@@ -3,16 +3,16 @@ from setuptools import setup, find_packages
 
 setup(
     name='propergitblame',
-    version='0.0.0',
     packages=find_packages(),
+    email='chuaqiwang@gmail.com',
     author='wang',
-    author_email='chuaqiwang@gmail.com',
     install_requires=[
         'click',
         'matplotlib',
         'numpy',
         'numba'
     ],
+    version='0.0.1'
     entry_points='''
     [console_scripts]
     propergitblame=propergitblame:propergitblame
