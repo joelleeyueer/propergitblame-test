@@ -7,7 +7,6 @@ with open('README.md') as f:
 setup(
     name='propergitblame',
     packages=find_packages(),
-    email='chuaqiwang@gmail.com',
     author='chua qi wang',
     install_requires=[
         'click',
