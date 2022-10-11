@@ -19,7 +19,7 @@ setup(
     description='a better git blame',
     long_description=README,
     long_description_content_type='text/markdown',
-    license='MIT'
+    license='MIT',
     entry_points='''
     [console_scripts]
     propergitblame=propergitblame:propergitblame
