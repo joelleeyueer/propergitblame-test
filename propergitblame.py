@@ -182,11 +182,38 @@ def propergitblame(filename, output, numberofcommits):
 
             output = []
             for i in range(1, len(scoreboard)):
-                author = scoreboard[i][:20].ljust(22)
-                output.append("{}{}) {}".format(author, i, unparsed_show[i-1]))
+                author = scoreboard[i]["author"][:23].ljust(24)
+                hash = scoreboard[i]["hash"][:10]
+                date = scoreboard[i]["date"]
+
+                #author = scoreboard[i][:20].ljust(22)
+                output.append("{} ({} {}   {}) {}".format(hash, author, date, i, unparsed_show[i-1]))
             
             for o in output:
                 print(o)
+
+        elif(output == "txt"):
+            print("output txt")
+            gitshowcommand = "git show HEAD:{}".format(filename)
+
+            show = subprocess.run(gitshowcommand, shell=True, capture_output=True, text=True)
+            unparsed_show = show.stdout
+            unparsed_show = unparsed_show.split('\n')
+
+            output = []
+            for i in range(1, len(scoreboard)):
+                author = scoreboard[i]["author"][:23].ljust(24)
+                hash = scoreboard[i]["hash"][:10]
+                date = scoreboard[i]["date"]
+
+                #author = scoreboard[i][:20].ljust(22)
+                output.append("{} ({} {}   {}) {}".format(hash, author, date, i, unparsed_show[i-1]))
+
+            with open(r'output.txt', 'w') as fp:
+                for o in output:
+                    # write each item on a new line
+                    fp.write("%s\n" % o)
+                print('Done')
         
         t2 = time.perf_counter()
         print(f'Finished in {t2-t1}s')
@@ -227,7 +254,11 @@ def getScoreboard(filename, numberofcommits=200):
     count = len(unparsed_show.split('\n'))
 
     #remember to change index 0 to null; line0 = index 0
-    scoreboard = [commitgraph[0]["author"]] * (count + 1)
+    scoreboard = [{
+        "author": commitgraph[0]["author"],
+        "hash": commitgraph[0]["hash"],
+        "date" : commitgraph[0]["date"]
+        }] * (count + 1)
 
     diffs = {}
 
@@ -251,16 +282,35 @@ def getScoreboard(filename, numberofcommits=200):
         commithash1 = commitgraph[i+1]['hash']
         oldauthor = commitgraph[i]["author"]
         newauthor = commitgraph[i+1]["author"]
+        olddate = commitgraph[i]["date"]
+        newdate = commitgraph[i+1]["date"]
         diffhash = commithash0 + ":" + commithash1
         listofchanges = changes[diffhash]
 
         for c in listofchanges:
             if c["type"] == "add":
-                scoreboard.insert(int(c["line"]), newauthor)
+                obj = {
+                    "hash" : commithash1,
+                    "author" : newauthor,
+                    "date" : newdate
+                    }
+                scoreboard.insert(int(c["line"]), obj)
+                #scoreboard.insert(int(c["line"]), newauthor)
             elif c["type"] == "delete":
                 scoreboard.pop(int(c["line"]))
             elif c["type"] == "edit":
-                scoreboard[int(c["line"])] = c["owner"]
+                if c["hash"] == commithash0:
+                    editdate = olddate
+                else:
+                    editdate = newdate
+                
+                obj = {
+                    "hash" : c["hash"],
+                    "author" : c["owner"],
+                    "date" : editdate
+                    }
+                #scoreboard[int(c["line"])] = c["owner"]
+                scoreboard[int(c["line"])] = obj
 
 
     t2 = time.perf_counter()
